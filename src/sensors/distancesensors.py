@@ -8,10 +8,12 @@ distancesensors.py defines two types of distance sensor:
 Both sensors make use of the Sonar class defined in sonar.py
 """
 import math
+
 import pyglet
 import src.resources
 import src.sprites.basicsprite
 import src.util
+
 from .sonar import Sonar
 
 

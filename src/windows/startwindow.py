@@ -3,8 +3,10 @@ startwindow.py as opposed to all other windows uses TKinter instead of pyglet to
 interface. It allows the user to select the world model and robot on startup.
 """
 import os
+import tkinter.messagebox
+import tkinter.simpledialog
 from tkinter import *
-import tkinter.simpledialog, tkinter.messagebox
+
 import src.util as util
 
 ROBOTS = ["Initio", "Pi2Go"]
@@ -17,7 +19,7 @@ DEFAULT_XML = "<?xml version='1.0' encoding='UTF-8'?>" + \
               "<robot position_x='180' position_y='180' rotation='0' /> </world>"
 
 
-class StartWindow(object):
+class StartWindow:
     def __init__(self):
         self.window = Tk()
         self.window.title("Python Simulator")

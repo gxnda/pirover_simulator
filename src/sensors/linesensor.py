@@ -7,8 +7,9 @@ linesensor.py defines a map and sensor class to simulate a typical line sensor o
  The FixedLineSensor class is used to represent a sensor that is mounted offset from the cetre of the robot.
 """
 import math
-import src.util
+
 import pyglet
+import src.util
 
 
 class LineSensorMap(object):

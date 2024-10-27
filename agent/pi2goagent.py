@@ -1,4 +1,6 @@
-import agent.bdiagent as agent, simclient.simrobot as robohat
+import agent.bdiagent as agent
+import simclient.simrobot as robohat
+
 
 class Pi2GoAgent(agent.Agent):
 

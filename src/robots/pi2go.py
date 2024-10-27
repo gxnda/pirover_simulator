@@ -8,20 +8,21 @@ string messeages passed via UDP socket.
 import math
 import random
 import socket
+import threading
 import time
+
 import pyglet
 import src.resources
-import src.util
 import src.sensors.led as theled
-from src.sensors.lightsensor import FixedLightSensor
-from src.sensors.led import FixedLED
+import src.util
 from src.sensors.distancesensors import FixedTransformDistanceSensor
+from src.sensors.led import FixedLED
+from src.sensors.lightsensor import FixedLightSensor
 from src.sensors.linesensor import LineSensorMap, FixedLineSensor
 from src.sprites import basicsprite
+
 from .robotconstants import SONAR_BEAM_ANGLE, SONAR_MAX_RANGE, SONAR_MIN_RANGE, IR_MAX_RANGE, IR_MIN_RANGE, \
     UDP_COMMAND_PORT, UDP_DATA_PORT, UDP_IP
-    
-import threading
 
 # Constants specific to the PI2GO robot.
 
