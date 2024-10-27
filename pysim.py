@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """
 pysim.py this script handles the loading of the simulator.
 """
@@ -23,6 +24,7 @@ if __name__ == "__main__":
         if selected_file == "None":
             selected_file = None
 
+        # Check if we need to start a sim or await a valid input
         if selected_file is not None and selected_robot is not None:
             simulator = Simulator(selected_file, selected_robot, start_window)
 
