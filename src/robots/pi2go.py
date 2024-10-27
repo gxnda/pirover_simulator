@@ -79,11 +79,12 @@ class Pi2Go(basicsprite.BasicSprite):
         self.light_backleft_sensor = FixedLightSensor(self, -x_light_offset, y_light_offset-10, "BackLeft", drawing_colour=(0,0,255,255))
         self.light_backright_sensor = FixedLightSensor(self, -x_light_offset, -y_light_offset+10, "BackRight", drawing_colour=(255,255,255,255))
            
-        self.light_sensors = []
-        self.light_sensors.append(self.light_frontleft_sensor)
-        self.light_sensors.append(self.light_frontright_sensor)
-        self.light_sensors.append(self.light_backleft_sensor)
-        self.light_sensors.append(self.light_backright_sensor)
+        self.light_sensors = [
+            self.light_frontleft_sensor,
+            self.light_frontright_sensor,
+            self.light_backleft_sensor,
+            self.light_backright_sensor
+        ]
         
         # add the LEDs - radius of the light is 10, a gap of 3 is added between neighbouring leds
         # left side leds
@@ -102,15 +103,16 @@ class Pi2Go(basicsprite.BasicSprite):
         self.back_led1 = FixedLED(self, -x_light_offset+10, -10, "back_led1")
         self.back_led2 = FixedLED(self, -x_light_offset+10, +10, "back_led2")
         
-        self.leds = []
-        self.leds.append(self.left_led1)
-        self.leds.append(self.left_led2)
-        self.leds.append(self.right_led1)
-        self.leds.append(self.right_led2)
-        self.leds.append(self.front_led1)
-        self.leds.append(self.front_led2)
-        self.leds.append(self.back_led1)
-        self.leds.append(self.back_led2)
+        self.leds = [
+            self.left_led1,
+            self.left_led2,
+            self.right_led1,
+            self.right_led2,
+            self.front_led1,
+            self.front_led2,
+            self.back_led1,
+            self.back_led2
+        ]
 
         self.line_sensor_map = LineSensorMap(line_map_sprite)
         self.left_line_sensor = FixedLineSensor(self, self.line_sensor_map, LINE_OFFSET_X, LINE_OFFSET_Y)
@@ -143,7 +145,6 @@ class Pi2Go(basicsprite.BasicSprite):
         self.cmd_thread.start()
 
         # pyglet.clock.schedule_interval(self.update_sensors, 1.0 / 30)
-
     
     def start_robot(self):
         self.publish_continue = True 
@@ -158,7 +159,6 @@ class Pi2Go(basicsprite.BasicSprite):
         # release the brakes on movement
         # pyglet.clock.unschedule(self.stop_robot_movement)
 
-      
     def stop_robot(self):
         # cause the publish and command threads to stop
         self.publish_continue = False 
