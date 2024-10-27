@@ -1,6 +1,6 @@
 """
 resources.py loads both the static and dynamic resources required for the simulator. Static resources are hardcoded
-values, dynamic resources are loaded from an xml file.
+values, dynamic resources are loaded from a xml file.
 """
 import os
 import xml.etree.ElementTree as ET
@@ -94,7 +94,7 @@ for i in range(NUM_BACKGROUNDS):
     backgrounds.append(bg)
 
 
-class DynamicAsssets:
+class DynamicAssets:
     def __init__(self, dynamic_assets_file, selected_robot_name, pyglet_sim_window, tk_start_window, bg_batch, fg_batch, bg_subgroup,
                                                                                                     lm_subgroup, fg_subgroup):
         # load xml file

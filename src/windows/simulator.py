@@ -10,7 +10,7 @@ import src.sensors.lightsensor
 import src.util as util
 from pyglet.window import key
 from pyglet.window import mouse
-from src.resources import DynamicAsssets
+from src.resources import DynamicAssets
 from src.robots.initio import Initio
 from src.robots.pi2go import Pi2Go
 from src.sprites.basicsprite import BasicSprite
@@ -34,7 +34,7 @@ class Simulator(pyglet.window.Window):
         self.subgroups['foreground_group'] = pyglet.graphics.Group(2)
 
         # load all the dynamic assets
-        self.dyn_assets = DynamicAsssets(world_file, selected_robot, self, tk_start_window, self.batches['bg_batch'], self.batches['fg_batch'],
+        self.dyn_assets = DynamicAssets(world_file, selected_robot, self, tk_start_window, self.batches['bg_batch'], self.batches['fg_batch'],
                                          self.subgroups['background_group'], self.subgroups['line_map_group'], self.subgroups['foreground_group'])
 
         # create the window
