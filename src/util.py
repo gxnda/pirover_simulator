@@ -2,10 +2,11 @@
 util.py contains some general helper functions used throughout the simulator.
 """
 import math
-import pyglet
-import sys
 import os
+import sys
 import threading
+
+import pyglet
 
 
 def resource_path(relative):

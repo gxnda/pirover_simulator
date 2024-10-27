@@ -9,8 +9,9 @@ linesensor.py defines a map and sensor class to simulate a typical line sensor o
  The FixedLineSensor class is used to represent a sensor that is mounted offset from the cetre of the robot.
 """
 import math
-import src.util
+
 import pyglet
+import src.util
 
 LIGHT_INTENSITY_MEAN_ANGLE = 0.0
 LIGHT_INTENSITY_STDDEV_ANGLE = math.pi/3.0  #60 deg

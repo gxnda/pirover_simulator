@@ -9,14 +9,16 @@ import math
 import socket
 import threading
 import time
-from src.sensors.linesensor import FixedLineSensor
-from src.sensors.lightsensor import FixedLightSensor
-from src.sensors.linesensor import LineSensorMap
-from src.sensors.distancesensors import FixedTransformDistanceSensor, PanningDistanceSensor
-from src.sprites import basicsprite
+
 import pyglet
 import src.resources
 import src.util
+from src.sensors.distancesensors import FixedTransformDistanceSensor, PanningDistanceSensor
+from src.sensors.lightsensor import FixedLightSensor
+from src.sensors.linesensor import FixedLineSensor
+from src.sensors.linesensor import LineSensorMap
+from src.sprites import basicsprite
+
 from .robotconstants import SONAR_BEAM_ANGLE, SONAR_MAX_RANGE, SONAR_MIN_RANGE, IR_MAX_RANGE, IR_MIN_RANGE, \
     UDP_COMMAND_PORT, UDP_DATA_PORT, UDP_IP, IR_BEAM_ANGLE
 

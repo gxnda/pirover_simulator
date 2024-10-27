@@ -4,7 +4,6 @@ in particular it adds a velocity model, window bounds checking, mouse handlers a
 """
 
 import src.resources
-from pyglet.event import EVENT_HANDLED
 from src.windows.simulator import *
 
 
