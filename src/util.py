@@ -1,34 +1,36 @@
 """
 util.py contains some general helper functions used throughout the simulator.
 """
+from __future__ import annotations
 import math
 import os
 import sys
 import threading
+from typing import Tuple
 
 import pyglet
 
 
-def resource_path(relative):
+def resource_path(relative: str) -> str:
     """Get a relative path."""
     if hasattr(sys, "_MEIPASS"):
         return os.path.join(sys._MEIPASS, relative)
     return os.path.join(relative)
 
 
-def get_resource_path():
-    """Get the path to the resources folder."""
+def get_resource_path() -> str:
+    """Get the path to the resources' folder."""
     resource_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources')
     return resource_path(resource_folder)
 
 
-def get_world_path():
+def get_world_path() -> str:
     """Get the path to the world folder."""
     resource_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'worlds')
     return resource_path(resource_folder)
 
 
-def rotate(point, angle):
+def rotate(point: Tuple[float, float], angle: int | float) -> Tuple[float, float]:
     """Rotate a point around a given angle"""
     px, py = point
     qx = math.cos(angle) * px - math.sin(angle) * py
@@ -59,17 +61,29 @@ def wrap_angle(angle):
     return angle
 
 
-def distancesq(point1=(0, 0), point2=(0, 0)):
+def distancesq(point1: Tuple[float, float] = None, point2: Tuple[float, float] = None) -> float:
     """Returns the squared distance between two points"""
+    if point1 is None:
+        point1 = (0, 0)
+
+    if point2 is None:
+        point2 = (0, 0)
+
     return (point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2
 
 
-def distance(point_1=(0, 0), point_2=(0, 0)):
+def distance(point1: Tuple[float, float] = None, point2: Tuple[float, float] = None) -> float:
     """Returns the distance between two points"""
-    return math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2)
+    if point1 is None:
+        point1 = (0, 0)
+
+    if point2 is None:
+        point2 = (0, 0)
+
+    return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
 
 
-def center_image(image):
+def center_image(image) -> None:
     """Sets an image's anchor point to its center"""
     image.anchor_x = image.width / 2
     image.anchor_y = image.height / 2
@@ -80,14 +94,14 @@ def center_image(image):
 # http://nullege.com/codes/show/src%40s%40p%40Space-Train-HEAD%40engine%40util%40draw.py/19/pyglet.graphics.draw/python
 
 
-def line(x1, y1, x2, y2, colors=None):
+def line(x1: int | float, y1: int | float, x2: int | float, y2: int | float, colors=None) -> None:
     if colors is None:
         pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ('v2f', (x1, y1, x2, y2)))
     else:
         pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ('v2f', (x1, y1, x2, y2)), ('c4f', colors))
 
 
-def line_loop(points, colors=None):
+def line_loop(points: Tuple[int | float], colors=None) -> None:
     """
     @param points: A list formatted like [x1, y1, x2, y2...]
     @param colors: A list formatted like [r1, g1, b1, a1, r2, g2, b2 a2...]
@@ -98,13 +112,17 @@ def line_loop(points, colors=None):
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_LINE_LOOP, ('v2f', points), ('c4f', colors))
 
 
-def rect(x1, y1, x2, y2):
+def rect(x1, y1, x2, y2) -> None:
     pyglet.graphics.draw(4, pyglet.gl.GL_QUADS, ('v2f', (x1, y1, x1, y2, x2, y2, x2, y1)))
 
 
-def rect_outline(x1, y1, x2, y2):
-    if x1 > x2: x1, x2 = x2, x1
-    if y1 > y2: y1, y2 = y2, y1
+def rect_outline(x1, y1, x2, y2) -> None:
+    if x1 > x2:
+        x1, x2 = x2, x1
+
+    if y1 > y2:
+        y1, y2 = y2, y1
+
     pyglet.graphics.draw(4, pyglet.gl.GL_LINE_LOOP, ('v2f', (x1, y1, x1, y2, x2, y2, x2, y1)))
 
 
@@ -142,64 +160,64 @@ def _iter_ellipse(x1, y1, x2, y2, da=None, step=None, dashed=False):
         if dashed: a += da
 
 
-def ellipse(x1, y1, x2, y2):
+def ellipse(x1, y1, x2, y2) -> None:
     points = _concat(_iter_ellipse(x1, y1, x2, y2))
     pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_TRIANGLE_FAN, ('v2f', points))
 
 
-def ellipse_outline(x1, y1, x2, y2):
+def ellipse_outline(x1, y1, x2, y2) -> None:
     points = _concat(_iter_ellipse(x1, y1, x2, y2))
     pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_LINE_LOOP, ('v2f', points))
 
 
-def circle(x, y, rad):
+def circle(x, y, rad) -> None:
     ellipse(x - rad, y - rad, x + rad, y + rad)
 
 
-def _iter_ngon(x, y, r, sides, start_angle=0.0):
+def _iter_ngon(x, y, r, sides, start_angle=0.0) -> None:
     rad = max(r, 0.01)
     rad_ = max(min(sides / rad / 2.0, 1), -1)
     da = math.pi * 2 / sides
     a = start_angle
     while a <= math.pi * 2 + start_angle:
-        yield (x + math.cos(a) * r, y + math.sin(a) * r)
+        yield x + math.cos(a) * r, y + math.sin(a) * r
         a += da
 
 
-def ngon(x, y, r, sides, start_angle=0.0):
+def ngon(x, y, r, sides, start_angle=0.0) -> None:
     points = _concat(_iter_ngon(x, y, r, sides, start_angle))
     pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_TRIANGLE_FAN, ('v2f', points))
 
 
-def ngon_outline(x, y, r, sides, start_angle=0.0):
+def ngon_outline(x, y, r, sides, start_angle=0.0) -> None:
     points = _concat(_iter_ngon(x, y, r, sides, start_angle))
     pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_LINE_LOOP, ('v2f', points))
 
 
-def points(points, colors=None):
+def points(points, colors=None) -> None:
     """
     @param points: A list formatted like [x1, y1, x2, y2...]
     @param colors: A list formatted like [r1, g1, b1, a1, r2, g2, b2 a2...]
     """
-    if colors == None:
+    if colors is None:
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_POINTS, ('v2f', points))
     else:
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_POINTS, ('v2f', points), ('c4f', colors))
 
 
-def polygon(points, colors=None):
+def polygon(points, colors=None) -> None:
     """
     @param points: A list formatted like [x1, y1, x2, y2...]
     @param colors: A list formatted like [r1, g1, b1, a1, r2, g2, b2 a2...]
     """
-    if colors == None:
+    if colors is None:
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_POLYGON, ('v2f', points))
     else:
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_POLYGON, ('v2f', points), ('c4f', colors))
 
 
-def quad(points, colors=None):
-    if colors == None:
+def quad(points, colors=None) -> None:
+    if colors is None:
         pyglet.graphics.draw(4, pyglet.gl.GL_QUADS, ('v2f', points))
     else:
         pyglet.graphics.draw(len(points) / 2, pyglet.gl.GL_POINTS, ('v2f', points), ('c4f', colors))
@@ -208,7 +226,8 @@ def quad(points, colors=None):
 GRID_SPACING = 50
 
 
-def grid(x, y, width, height):
+def grid(x: int | float, y: int | float,
+         width: int | float, height: int | float) -> None:
     x_start, y_start = x, y
     x_end, y_end = x + width, y + height
     x -= x % GRID_SPACING
@@ -222,29 +241,30 @@ def grid(x, y, width, height):
         y += GRID_SPACING
 
 
-def draw_rect(x, y, width, height):
+def draw_rect(x: int | float, y: int | float,
+              width: int | float, height: int | float) -> None:
     pyglet.gl.glBegin(pyglet.gl.GL_LINE_LOOP)
     pyglet.gl.glVertex2f(x, y)
     pyglet.gl.glVertex2f(x + width, y)
     pyglet.gl.glVertex2f(x + width, y + height)
     pyglet.gl.glVertex2f(x, y + height)
     pyglet.gl.glEnd()
-    
+
+
 class StoppableThread(threading.Thread):
     def __init__(self, *args, **kwargs):
         """ constructor, setting initial variables """
         super(StoppableThread, self).__init__(*args, **kwargs)
-        self._stopevent = threading.Event(  )
+        self._stopevent = threading.Event()
         self._sleepperiod = 1.0
 
     def run(self):
         """ main control loop """
-        while not self._stopevent.isSet(  ):
+        while not self._stopevent.isSet():
             print("running stoppable thread")
             self._stopevent.wait(self._sleepperiod)
 
-    def join(self, timeout=None):
+    def join(self, timeout: int | float | None = None):
         """ Stop the thread. """
-        self._stopevent.set(  )
+        self._stopevent.set()
         threading.Thread.join(self, timeout)
-
