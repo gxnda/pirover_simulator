@@ -17,7 +17,7 @@ DEFAULT_XML = "<?xml version='1.0' encoding='UTF-8'?>" + \
               "<robot position_x='180' position_y='180' rotation='0' /> </world>"
 
 
-class StartWindow(object):
+class StartWindow:
     def __init__(self):
         self.window = Tk()
         self.window.title("Python Simulator")
